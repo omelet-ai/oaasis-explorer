@@ -8,7 +8,7 @@ import { ArrowDown, Sparkles, Zap, Globe, Brain, ChevronDown, Route, Calendar, P
 const ExplorerCanvas = dynamic(() => import('./ExplorerCanvas'), {
   ssr: false,
   loading: () => (
-    <div className="w-full h-[750px] flex items-center justify-center" style={{ background: '#FFFFFF' }}>
+    <div className="w-full h-[750px] flex items-center justify-center" style={{ background: '#1e1b2e' }}>
       <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#A78BFA] to-[#2DD4BF] animate-pulse" />
     </div>
   )
@@ -65,7 +65,7 @@ export default function LandingPage() {
   }, []);
 
   return (
-    <div className="min-h-screen" style={{ background: '#FFFFFF' }}>
+    <div className="h-screen overflow-y-auto snap-y snap-mandatory" style={{ background: '#FFFFFF' }}>
       {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-[100] glass">
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
@@ -139,7 +139,7 @@ export default function LandingPage() {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden pt-24 pb-12">
+      <section className="relative h-screen min-h-screen flex items-center justify-center overflow-hidden pt-24 pb-12 snap-start snap-always">
         {/* Ambient backgrounds */}
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute top-[15%] left-[10%] w-[600px] h-[600px] ambient-violet rounded-full blur-[150px] opacity-40" />
@@ -230,9 +230,9 @@ export default function LandingPage() {
       </section>
 
       {/* Platform Section - Interactive Graph */}
-      <section id="explore" className="relative py-20">
+      <section id="explore" className="relative h-screen min-h-screen flex flex-col justify-center py-8 snap-start snap-always">
         {/* Section Header */}
-        <div className="max-w-6xl mx-auto px-6 mb-8">
+        <div className="max-w-6xl mx-auto px-6 mb-4">
           <div className="flex items-end justify-between">
             <div>
               <h2 className="text-3xl font-bold text-gray-900 mb-2">Platform Architecture</h2>
@@ -254,15 +254,18 @@ export default function LandingPage() {
         </div>
 
         {/* Interactive Graph */}
-        <div className="relative">
-          <div className="rounded-3xl mx-6 overflow-hidden border border-gray-200 shadow-lg">
+        <div className="relative flex-1">
+          <div
+            className="rounded-3xl mx-6 overflow-hidden border border-gray-200 shadow-lg h-full"
+            style={{ maxHeight: 'calc(100vh - 180px)' }}
+          >
             <ExplorerCanvas embedded={true} />
           </div>
         </div>
       </section>
 
       {/* Marketplace Section */}
-      <section id="platform" className="py-24 bg-gray-50/50">
+      <section id="platform" className="min-h-screen py-16 bg-gray-50/50 snap-start">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">Platform Ecosystem</h2>
@@ -359,7 +362,7 @@ export default function LandingPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-24">
+      <section className="py-16 snap-start">
         <div className="max-w-4xl mx-auto px-6">
           <div className="bg-gradient-to-br from-[#F5F3FF] to-[#F0FDFA] rounded-3xl p-12 text-center relative overflow-hidden border border-gray-200">
             {/* Background decoration */}
