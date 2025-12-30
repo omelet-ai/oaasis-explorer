@@ -295,8 +295,8 @@ function ExplorerCanvasInner({ embedded = false }: ExplorerCanvasProps) {
           stroke: isOnPath && hasActiveNode
             ? getEdgeColor()
             : hasActiveNode
-              ? 'rgba(0,0,0,0.05)' // dim non-path edges when hovering
-              : 'rgba(167, 139, 250, 0.25)', // default subtle color
+              ? 'rgba(255,255,255,0.08)' // dim non-path edges when hovering
+              : 'rgba(167, 139, 250, 0.35)', // default subtle color
           strokeWidth: isOnPath && hasActiveNode ? 2.5 : 1,
           filter: isOnPath && hasActiveNode ? `drop-shadow(0 0 8px ${getEdgeColor()}80)` : 'none',
           transition: 'all 0.3s ease',
@@ -316,33 +316,33 @@ function ExplorerCanvasInner({ embedded = false }: ExplorerCanvasProps) {
   const containerHeight = embedded ? 'h-[750px]' : 'h-screen';
 
   return (
-    <div className={`w-full ${containerHeight} relative overflow-hidden`} style={{ background: '#FFFFFF' }}>
+    <div className={`w-full ${containerHeight} relative overflow-hidden`} style={{ background: '#1e1b2e' }}>
       {/* Ambient glows */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-[5%] left-[5%] w-[600px] h-[600px] ambient-violet rounded-full blur-[120px] opacity-50" />
-        <div className="absolute bottom-[10%] right-[15%] w-[500px] h-[500px] ambient-teal rounded-full blur-[120px] opacity-40" />
+        <div className="absolute top-[5%] left-[5%] w-[600px] h-[600px] ambient-violet-dark rounded-full blur-[120px] opacity-60" />
+        <div className="absolute bottom-[10%] right-[15%] w-[500px] h-[500px] ambient-teal-dark rounded-full blur-[120px] opacity-50" />
       </div>
 
       {/* Header - only show if not embedded */}
       {!embedded && (
-        <header className="absolute top-0 left-0 right-0 z-50 bg-gradient-to-b from-white via-white/95 to-transparent">
+        <header className="absolute top-0 left-0 right-0 z-50 bg-gradient-to-b from-[#1e1b2e] via-[#1e1b2e]/95 to-transparent">
           <div className="max-w-7xl mx-auto px-8 py-5 flex items-center justify-between">
             <div className="flex items-center gap-4">
               <div className="flex items-center">
                 <Image src="/omelet-full-purple.svg" alt="Omelet" width={120} height={32} className="h-8 w-auto" />
               </div>
               <div className="border-l border-gray-200 pl-4">
-                <h1 className="text-gray-900 font-bold text-xl tracking-tight">
+                <h1 className="text-white font-bold text-xl tracking-tight">
                   Decision <span className="gradient-text-mixed">OS</span>
                 </h1>
-                <p className="text-gray-500 text-xs"><span className="gradient-text-mixed font-medium">OaaSIS</span> Platform</p>
+                <p className="text-gray-400 text-xs"><span className="gradient-text-mixed font-medium">OaaSIS</span> Platform</p>
               </div>
             </div>
             <div className="flex items-center gap-5">
               {isFocusMode && (
                 <button
                   onClick={() => setFocusedNodeId(null)}
-                  className="text-sm glass text-gray-600 px-4 py-2 rounded-xl transition-all hover:bg-gray-100"
+                  className="text-sm glass-dark text-gray-200 px-4 py-2 rounded-xl transition-all hover:bg-[#3d3755]"
                 >
                   ✕ Exit Focus
                 </button>
@@ -351,7 +351,7 @@ function ExplorerCanvasInner({ embedded = false }: ExplorerCanvasProps) {
                 href="https://omelet.ai"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-500 hover:text-gray-900 text-sm transition-colors"
+                className="text-gray-300 hover:text-white text-sm transition-colors"
               >
                 omelet.ai →
               </a>
@@ -390,7 +390,7 @@ function ExplorerCanvasInner({ embedded = false }: ExplorerCanvasProps) {
       >
         <Background color="transparent" />
         <Controls
-          className="!bg-white/95 !border-gray-200 !rounded-xl !shadow-lg"
+          className="!bg-[#2a2640]/95 !border-[#3d3755] !rounded-xl !shadow-lg [&_button]:!bg-[#2a2640] [&_button]:!border-[#3d3755] [&_button]:hover:!bg-[#3d3755] [&_svg]:!fill-gray-300"
           showInteractive={false}
         />
         {!embedded && (
@@ -400,8 +400,8 @@ function ExplorerCanvasInner({ embedded = false }: ExplorerCanvasProps) {
               if (data.category === 'foundation' || data.category === 'solver') return '#A78BFA';
               return '#2DD4BF';
             }}
-            maskColor="rgba(255, 255, 255, 0.9)"
-            className="!bg-white/95 !border-gray-200 !rounded-xl"
+            maskColor="rgba(30, 27, 46, 0.85)"
+            className="!bg-[#2a2640]/95 !border-[#3d3755] !rounded-xl"
             pannable
             zoomable
           />
@@ -414,18 +414,18 @@ function ExplorerCanvasInner({ embedded = false }: ExplorerCanvasProps) {
       {/* Hints */}
       {!embedded && (
         <div className={`
-          absolute bottom-6 right-6 text-xs glass px-4 py-2.5 rounded-xl
+          absolute bottom-6 right-6 text-xs glass-dark px-4 py-2.5 rounded-xl
           transition-all duration-300
           ${isFocusMode ? 'opacity-0 pointer-events-none' : 'opacity-100'}
         `}>
-          <span className="text-gray-500">Click to focus</span>
-          <span className="text-gray-400 mx-2">•</span>
-          <span className="text-gray-500">Hover to explore</span>
+          <span className="text-gray-300">Click to focus</span>
+          <span className="text-gray-500 mx-2">•</span>
+          <span className="text-gray-300">Hover to explore</span>
         </div>
       )}
 
       {/* Infinity symbol */}
-      <div className="absolute bottom-1/4 right-16 text-[#2DD4BF]/20 text-9xl font-extralight pointer-events-none select-none">
+      <div className="absolute bottom-1/4 right-16 text-[#2DD4BF]/15 text-9xl font-extralight pointer-events-none select-none">
         ∞
       </div>
     </div>

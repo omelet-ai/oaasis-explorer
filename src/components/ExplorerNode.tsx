@@ -32,26 +32,26 @@ const linkIconMap: Record<LinkType, LucideIcon> = {
 const categoryStyles: Record<string, { bg: string; border: string; glow: string; accent: string }> = {
   foundation: {
     bg: 'bg-gradient-to-br from-white to-[#F5F3FF]',
-    border: 'border-[#A78BFA]/50',
-    glow: 'shadow-[0_0_60px_rgba(167,139,250,0.3)]',
+    border: 'border-[#A78BFA]/60',
+    glow: 'shadow-[0_0_60px_rgba(167,139,250,0.5)]',
     accent: '#A78BFA',
   },
   solver: {
     bg: 'bg-gradient-to-br from-white to-[#F5F3FF]',
-    border: 'border-[#8B5CF6]/40',
-    glow: 'shadow-[0_0_40px_rgba(139,92,246,0.25)]',
+    border: 'border-[#8B5CF6]/60',
+    glow: 'shadow-[0_0_40px_rgba(139,92,246,0.4)]',
     accent: '#8B5CF6',
   },
   'mcp-server': {
     bg: 'bg-gradient-to-br from-white to-[#F0FDFA]',
-    border: 'border-[#2DD4BF]/40',
-    glow: 'shadow-[0_0_40px_rgba(45,212,191,0.25)]',
+    border: 'border-[#2DD4BF]/60',
+    glow: 'shadow-[0_0_40px_rgba(45,212,191,0.4)]',
     accent: '#2DD4BF',
   },
   application: {
     bg: 'bg-gradient-to-br from-white to-[#ECFDF5]',
-    border: 'border-[#34D399]/30',
-    glow: 'shadow-[0_0_25px_rgba(52,211,153,0.2)]',
+    border: 'border-[#34D399]/50',
+    glow: 'shadow-[0_0_25px_rgba(52,211,153,0.3)]',
     accent: '#34D399',
   },
 };
@@ -167,7 +167,7 @@ export const ExplorerNode = memo(({ data, id }: ExplorerNodeProps) => {
     <div
       className={`
         explorer-node group relative rounded-2xl border
-        cursor-pointer backdrop-blur-sm
+        cursor-pointer backdrop-blur-sm shadow-lg shadow-black/20
         ${styles.bg} ${styles.border}
         ${isFocused ? styles.glow : ''}
         ${shouldAnimate && !hasLink ? floatClass : ''}
