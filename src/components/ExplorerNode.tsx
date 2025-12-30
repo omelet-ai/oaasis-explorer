@@ -156,6 +156,8 @@ export const ExplorerNode = memo(({ data, id }: ExplorerNodeProps) => {
 
   const hasLink = !!data.link;
   const showLinkIndicator = isFeaturedLink;
+  const isComingSoon = !isFeaturedLink; // Not a featured link = Coming Soon
+  
   const clickableClass = showLinkIndicator && !isFocused && !data.isDimmed
     ? (data.category === 'foundation' || data.category === 'solver' 
        ? 'clickable-violet' 
@@ -195,13 +197,20 @@ export const ExplorerNode = memo(({ data, id }: ExplorerNodeProps) => {
       
       <div className={isCompact ? 'p-2.5' : 'p-3.5'}>
         {isCompact ? (
-          <div className="flex items-center justify-center">
+          <div className="flex items-center justify-center relative">
             <div 
               className="w-8 h-8 rounded-xl flex items-center justify-center transition-all duration-300"
               style={{ background: `${styles.accent}15` }}
             >
               <Icon className="w-4 h-4" style={{ color: styles.accent }} />
             </div>
+            {/* Hover tooltip for application nodes */}
+            {!isFocused && (
+              <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2.5 py-1.5 rounded-lg bg-gray-900/95 border border-white/10 text-white text-[11px] font-medium whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50 shadow-xl">
+                {data.label}
+                <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-[1px] border-4 border-transparent border-t-gray-900/95" />
+              </div>
+            )}
           </div>
         ) : (
           <>
@@ -253,7 +262,8 @@ export const ExplorerNode = memo(({ data, id }: ExplorerNodeProps) => {
                   {data.description}
                 </p>
                 
-                {data.link && LinkIcon && (
+                {/* Show link button only for featured (Live) nodes */}
+                {isFeaturedLink && data.link && LinkIcon ? (
                   <button 
                     className="mt-3 w-full flex items-center justify-center gap-2 text-[11px] rounded-xl px-3 py-2.5 transition-all duration-200 font-medium text-white"
                     style={{ background: styles.accent }}
@@ -265,6 +275,12 @@ export const ExplorerNode = memo(({ data, id }: ExplorerNodeProps) => {
                     <LinkIcon className="w-3.5 h-3.5" />
                     <span>{data.link.label}</span>
                   </button>
+                ) : (
+                  /* Coming Soon message for non-featured nodes */
+                  <div className="mt-3 w-full flex items-center justify-center gap-2 text-[11px] rounded-xl px-3 py-2.5 bg-gray-700/30 border border-gray-600/30 text-gray-400 font-medium">
+                    <Clock className="w-3.5 h-3.5" />
+                    <span>Coming Soon</span>
+                  </div>
                 )}
                 
                 {data.tags && data.tags.length > 0 && (
@@ -285,7 +301,7 @@ export const ExplorerNode = memo(({ data, id }: ExplorerNodeProps) => {
           <div className="absolute left-full top-1/2 -translate-y-1/2 ml-4 w-56 glass rounded-2xl p-4 z-50 shadow-2xl info-panel-enter">
             <div className="text-white font-medium text-sm mb-2">{data.label}</div>
             <p className="text-gray-500 text-[11px] leading-relaxed mb-3">{data.description}</p>
-            {data.link && LinkIcon && (
+            {isFeaturedLink && data.link && LinkIcon ? (
               <button 
                 className="w-full flex items-center justify-center gap-2 text-[11px] text-white rounded-xl px-3 py-2 transition-all font-medium"
                 style={{ background: styles.accent }}
@@ -297,6 +313,11 @@ export const ExplorerNode = memo(({ data, id }: ExplorerNodeProps) => {
                 <LinkIcon className="w-3.5 h-3.5" />
                 <span>{data.link.label}</span>
               </button>
+            ) : (
+              <div className="w-full flex items-center justify-center gap-2 text-[11px] rounded-xl px-3 py-2 bg-gray-700/30 border border-gray-600/30 text-gray-400 font-medium">
+                <Clock className="w-3.5 h-3.5" />
+                <span>Coming Soon</span>
+              </div>
             )}
           </div>
         )}
@@ -315,9 +336,9 @@ export const ExplorerNode = memo(({ data, id }: ExplorerNodeProps) => {
             }
           }}
         >
-          {/* External link arrow - bright and eye-catching, positioned outside the card */}
+          {/* External link arrow - bright and eye-catching with pulse animation */}
           <div 
-            className="w-7 h-7 rounded-full flex items-center justify-center transition-all hover:scale-125"
+            className="w-7 h-7 rounded-full flex items-center justify-center transition-all hover:scale-125 link-pulse"
             style={{ 
               background: styles.accent,
               boxShadow: `0 0 12px ${styles.accent}80`,
@@ -331,7 +352,7 @@ export const ExplorerNode = memo(({ data, id }: ExplorerNodeProps) => {
       {/* Clickable indicator for compact (application) nodes - only for featured */}
       {showLinkIndicator && !isFocused && isCompact && (
         <div 
-          className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full flex items-center justify-center transition-all hover:scale-125 cursor-pointer"
+          className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full flex items-center justify-center transition-all hover:scale-125 cursor-pointer link-pulse"
           style={{ 
             background: styles.accent,
             boxShadow: `0 0 10px ${styles.accent}80`,

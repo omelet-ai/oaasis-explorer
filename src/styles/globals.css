@@ -217,6 +217,22 @@ body {
   animation: featured-glow 2s ease-in-out infinite, clickable-pulse-teal 3s ease-in-out infinite;
 }
 
+/* Link indicator pulse animation */
+@keyframes link-pulse {
+  0%, 100% { 
+    transform: scale(1);
+    box-shadow: 0 0 10px currentColor;
+  }
+  50% { 
+    transform: scale(1.15);
+    box-shadow: 0 0 20px currentColor;
+  }
+}
+
+.link-pulse {
+  animation: link-pulse 2s ease-in-out infinite;
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 6px;

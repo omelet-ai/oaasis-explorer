@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useRef } from 'react';
 import dynamic from 'next/dynamic';
-import { ArrowDown, Sparkles, Zap, Globe, Brain, ChevronDown, Route, Calendar, Package, Warehouse, Wrench, Bot, Store, Layers } from 'lucide-react';
+import { ArrowDown, Sparkles, Zap, Globe, Brain, ChevronDown, Route, Calendar, Package, Warehouse, Wrench, Bot, Store, Layers, ExternalLink } from 'lucide-react';
 
 const ExplorerCanvas = dynamic(() => import('./ExplorerCanvas'), { 
   ssr: false,
@@ -18,25 +18,29 @@ const verticalProducts = [
     name: 'Routing', 
     icon: Route, 
     url: 'https://routing.omelet.ai',
-    description: 'Vehicle routing optimization'
+    description: 'Vehicle routing optimization',
+    isLive: false
   },
   { 
     name: 'Scheduling', 
     icon: Calendar, 
     url: 'https://scheduling.omelet.ai',
-    description: 'Resource & job scheduling'
+    description: 'Resource & job scheduling',
+    isLive: false
   },
   { 
     name: 'Packaging', 
     icon: Package, 
     url: 'https://packing.omelet.ai',
-    description: 'Bin packing & container loading'
+    description: 'Bin packing & container loading',
+    isLive: false
   },
   { 
     name: 'Inventory', 
     icon: Warehouse, 
     url: 'https://inventory.omelet.ai',
-    description: 'Inventory optimization'
+    description: 'Inventory optimization',
+    isLive: false
   },
 ];
 
@@ -134,25 +138,25 @@ export default function LandingPage() {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden pt-28 pb-16">
+      <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden pt-24 pb-12">
         {/* Ambient backgrounds */}
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-[15%] left-[10%] w-[500px] h-[500px] ambient-violet rounded-full blur-[150px] opacity-30" />
-          <div className="absolute bottom-[15%] right-[10%] w-[450px] h-[450px] ambient-teal rounded-full blur-[150px] opacity-25" />
+          <div className="absolute top-[15%] left-[10%] w-[600px] h-[600px] ambient-violet rounded-full blur-[150px] opacity-30" />
+          <div className="absolute bottom-[15%] right-[10%] w-[550px] h-[550px] ambient-teal rounded-full blur-[150px] opacity-25" />
         </div>
 
-        <div className="relative z-10 max-w-6xl mx-auto px-8 text-center">
+        <div className="relative z-10 max-w-7xl mx-auto px-8 text-center">
           {/* Badge */}
           <div 
-            className={`inline-flex items-center gap-3 px-5 py-2.5 glass-light rounded-full mb-8 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+            className={`inline-flex items-center gap-3 px-6 py-3 glass-light rounded-full mb-10 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
           >
-            <Sparkles className="w-5 h-5 text-[#A78BFA]" />
-            <span className="text-gray-400 text-base">Enterprise Optimization Platform</span>
+            <Sparkles className="w-6 h-6 text-[#A78BFA]" />
+            <span className="text-gray-400 text-lg">Enterprise Optimization Platform</span>
           </div>
 
           {/* Main Title */}
           <h1 
-            className={`text-6xl md:text-8xl font-bold tracking-tight mb-6 transition-all duration-1000 delay-150 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+            className={`text-7xl md:text-9xl font-bold tracking-tight mb-8 transition-all duration-1000 delay-150 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
           >
             <span className="text-white">Decision </span>
             <span className="gradient-text-mixed">OS</span>
@@ -160,19 +164,19 @@ export default function LandingPage() {
 
           {/* Subtitle */}
           <p 
-            className={`text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto mb-6 leading-relaxed transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+            className={`text-2xl md:text-3xl text-gray-400 max-w-4xl mx-auto mb-8 leading-relaxed transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
           >
             Optimization AI Agent Platform
           </p>
 
           {/* OaaSIS Explanation */}
           <div 
-            className={`max-w-2xl mx-auto mb-12 transition-all duration-1000 delay-450 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+            className={`max-w-3xl mx-auto mb-14 transition-all duration-1000 delay-450 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
           >
-            <div className="inline-flex items-center gap-2 mb-4">
-              <span className="text-3xl font-bold gradient-text-mixed">OaaSIS</span>
+            <div className="inline-flex items-center gap-2 mb-5">
+              <span className="text-4xl font-bold gradient-text-mixed">OaaSIS</span>
             </div>
-            <p className="text-gray-500 text-base leading-relaxed">
+            <p className="text-gray-500 text-lg leading-relaxed">
               <span className="gradient-text-violet font-semibold">O</span>ptimization <span className="text-gray-400">as a</span>{' '}
               <span className="gradient-text-teal font-semibold">S</span>ervice / <span className="gradient-text-teal font-semibold">I</span>nfrastructure / <span className="gradient-text-teal font-semibold">S</span>ystem
             </p>
@@ -180,34 +184,34 @@ export default function LandingPage() {
 
           {/* Value Props */}
           <div 
-            className={`grid grid-cols-1 md:grid-cols-3 gap-5 max-w-5xl mx-auto mb-12 transition-all duration-1000 delay-600 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+            className={`grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto mb-14 transition-all duration-1000 delay-600 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
           >
-            <div className="glass-light rounded-2xl p-6 text-left">
-              <div className="w-12 h-12 rounded-xl bg-[#A78BFA]/10 flex items-center justify-center mb-4">
-                <Brain className="w-6 h-6 text-[#A78BFA]" />
+            <div className="glass-light rounded-2xl p-7 text-left">
+              <div className="w-14 h-14 rounded-xl bg-[#A78BFA]/10 flex items-center justify-center mb-5">
+                <Brain className="w-7 h-7 text-[#A78BFA]" />
               </div>
-              <h3 className="text-white font-medium text-base mb-2">AI Foundation</h3>
-              <p className="text-gray-500 text-sm leading-relaxed">
+              <h3 className="text-white font-medium text-lg mb-2">AI Foundation</h3>
+              <p className="text-gray-500 text-base leading-relaxed">
                 State-of-the-art optimization algorithms powered by AI
               </p>
             </div>
             
-            <div className="glass-light rounded-2xl p-6 text-left">
-              <div className="w-12 h-12 rounded-xl bg-[#2DD4BF]/10 flex items-center justify-center mb-4">
-                <Zap className="w-6 h-6 text-[#2DD4BF]" />
+            <div className="glass-light rounded-2xl p-7 text-left">
+              <div className="w-14 h-14 rounded-xl bg-[#2DD4BF]/10 flex items-center justify-center mb-5">
+                <Zap className="w-7 h-7 text-[#2DD4BF]" />
               </div>
-              <h3 className="text-white font-medium text-base mb-2">MCP Architecture</h3>
-              <p className="text-gray-500 text-sm leading-relaxed">
+              <h3 className="text-white font-medium text-lg mb-2">MCP Architecture</h3>
+              <p className="text-gray-500 text-base leading-relaxed">
                 Modular components for any optimization domain
               </p>
             </div>
             
-            <div className="glass-light rounded-2xl p-6 text-left">
-              <div className="w-12 h-12 rounded-xl bg-[#34D399]/10 flex items-center justify-center mb-4">
-                <Globe className="w-6 h-6 text-[#34D399]" />
+            <div className="glass-light rounded-2xl p-7 text-left">
+              <div className="w-14 h-14 rounded-xl bg-[#34D399]/10 flex items-center justify-center mb-5">
+                <Globe className="w-7 h-7 text-[#34D399]" />
               </div>
-              <h3 className="text-white font-medium text-base mb-2">No-Code Agents</h3>
-              <p className="text-gray-500 text-sm leading-relaxed">
+              <h3 className="text-white font-medium text-lg mb-2">No-Code Agents</h3>
+              <p className="text-gray-500 text-base leading-relaxed">
                 Build production-ready apps without engineering
               </p>
             </div>

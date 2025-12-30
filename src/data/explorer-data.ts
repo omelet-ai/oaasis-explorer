@@ -216,7 +216,7 @@ export const explorerData: ExplorerData = {
     {
       id: 'tms-mobile',
       category: 'application',
-      label: 'TMS Mobile',
+      label: 'TMS App',
       description: 'Driver companion app with navigation, proof of delivery, and real-time communication.',
       icon: 'Smartphone',
       status: 'live',
@@ -245,7 +245,7 @@ export const explorerData: ExplorerData = {
     {
       id: 'hospital-scheduler',
       category: 'application',
-      label: 'Nurse Scheduler',
+      label: 'Nurse Scheduling Web',
       description: 'Nurse scheduling application. Manage shifts, skills, and compliance requirements.',
       icon: 'CalendarCheck',
       status: 'live',

@@ -51,38 +51,45 @@ function ExplorerCanvasInner({ embedded = false }: ExplorerCanvasProps) {
   
   const isFocusMode = focusedNodeId !== null;
 
-  const getConnectedNodes = useCallback((nodeId: string) => {
-    const connected = new Set<string>();
-    connected.add(nodeId);
-
+  // Get upstream path (ancestors) - only traverse from target to source
+  const getUpstreamPath = useCallback((nodeId: string) => {
+    const pathNodes = new Set<string>([nodeId]);
+    const pathEdges = new Set<string>();
+    
     const queue = [nodeId];
     const visited = new Set<string>([nodeId]);
 
     while (queue.length > 0) {
       const current = queue.shift()!;
       
+      // Only traverse upstream (target → source direction)
       explorerData.edges.forEach((edge) => {
-        if (edge.source === current && !visited.has(edge.target)) {
-          connected.add(edge.target);
-          visited.add(edge.target);
-          queue.push(edge.target);
-        }
-        if (edge.target === current && !visited.has(edge.source)) {
-          connected.add(edge.source);
-          visited.add(edge.source);
-          queue.push(edge.source);
+        if (edge.target === current) {
+          // Always add the edge to path (even if source node was visited)
+          pathEdges.add(`${edge.source}->${edge.target}`);
+          
+          // Only continue traversal if node not yet visited
+          if (!visited.has(edge.source)) {
+            pathNodes.add(edge.source);
+            visited.add(edge.source);
+            queue.push(edge.source);
+          }
         }
       });
     }
 
-    return connected;
+    return { nodes: pathNodes, edges: pathEdges };
   }, []);
 
-  const connectedNodeIds = useMemo(() => {
+  // Calculate upstream path for active node
+  const upstreamPath = useMemo(() => {
     const activeNodeId = focusedNodeId || hoveredNodeId;
-    if (!activeNodeId) return new Set<string>();
-    return getConnectedNodes(activeNodeId);
-  }, [focusedNodeId, hoveredNodeId, getConnectedNodes]);
+    if (!activeNodeId) return { nodes: new Set<string>(), edges: new Set<string>() };
+    return getUpstreamPath(activeNodeId);
+  }, [focusedNodeId, hoveredNodeId, getUpstreamPath]);
+
+  const connectedNodeIds = upstreamPath.nodes;
+  const connectedEdgeIds = upstreamPath.edges;
 
   const handleNodeHover = useCallback((nodeId: string | null) => {
     if (!isFocusMode) {
@@ -261,30 +268,20 @@ function ExplorerCanvasInner({ embedded = false }: ExplorerCanvasProps) {
     return [...headerNodes, ...explorerNodes];
   }, [hoveredNodeId, connectedNodeIds, handleNodeHover, handleNodeClick, isFocusMode, focusedNodeId]);
 
-  // Featured edges - connections for demo/highlighted nodes
-  const FEATURED_EDGES = new Set([
-    'foundation->routing-engine',        // Foundation → Routing Solver
-    'foundation->scheduling-engine',     // Foundation → Scheduling Solver
-    'routing-engine->tms-mcp',           // Routing Solver → TMS MCP
-    'tms-mcp->tms-web',                  // TMS MCP → TMS Web
-    'tms-mcp->tms-mobile',               // TMS MCP → TMS Mobile
-    'scheduling-engine->nurse-scheduling-mcp',  // Scheduling Solver → Nurse Scheduling MCP
-    'nurse-scheduling-mcp->hospital-scheduler', // Nurse Scheduling MCP → Hospital Scheduler
-  ]);
-
   // Build edges - curved for radial look
+  // Highlight only upstream path edges when hovering/focusing a node
   const edges: Edge[] = useMemo(() => {
+    const hasActiveNode = hoveredNodeId !== null || isFocusMode;
+    
     return explorerData.edges.map((edge, index) => {
       const edgeKey = `${edge.source}->${edge.target}`;
-      const isFeatured = FEATURED_EDGES.has(edgeKey);
-      const isActive = connectedNodeIds.has(edge.source) && connectedNodeIds.has(edge.target);
+      const isOnPath = connectedEdgeIds.has(edgeKey);
       const sourceNode = explorerData.nodes.find(n => n.id === edge.source);
-      const isUpstream = sourceNode?.category === 'foundation' || sourceNode?.category === 'solver';
-
-      // Featured edges get special styling
-      const getFeaturedColor = () => {
-        if (sourceNode?.category === 'foundation') return '#A78BFA'; // violet for foundation connections
-        if (sourceNode?.category === 'solver') return '#A78BFA'; // violet for solver connections
+      
+      // Get color based on source category
+      const getEdgeColor = () => {
+        if (sourceNode?.category === 'foundation') return '#A78BFA'; // violet
+        if (sourceNode?.category === 'solver') return '#A78BFA'; // violet
         return '#2DD4BF'; // teal for MCP connections
       };
 
@@ -293,22 +290,20 @@ function ExplorerCanvasInner({ embedded = false }: ExplorerCanvasProps) {
         source: edge.source,
         target: edge.target,
         type: 'smoothstep',
-        animated: isFeatured || (isActive && (hoveredNodeId !== null || isFocusMode)),
+        animated: isOnPath && hasActiveNode,
         style: {
-          stroke: isFeatured
-            ? getFeaturedColor()
-            : isActive 
-              ? (isUpstream ? '#A78BFA' : '#2DD4BF')
-              : (hoveredNodeId || isFocusMode)
-                ? 'rgba(255,255,255,0.03)' 
-                : 'rgba(167, 139, 250, 0.18)',
-          strokeWidth: isFeatured ? 3 : (isActive ? (isFocusMode ? 2.5 : 2) : 1.2),
-          filter: isFeatured ? `drop-shadow(0 0 6px ${getFeaturedColor()}80)` : 'none',
-          transition: 'all 0.4s ease',
+          stroke: isOnPath && hasActiveNode
+            ? getEdgeColor()
+            : hasActiveNode
+              ? 'rgba(255,255,255,0.05)' // dim non-path edges when hovering
+              : 'rgba(167, 139, 250, 0.15)', // default subtle color
+          strokeWidth: isOnPath && hasActiveNode ? 2.5 : 1,
+          filter: isOnPath && hasActiveNode ? `drop-shadow(0 0 8px ${getEdgeColor()}80)` : 'none',
+          transition: 'all 0.3s ease',
         },
       };
     });
-  }, [connectedNodeIds, hoveredNodeId, isFocusMode]);
+  }, [connectedEdgeIds, hoveredNodeId, isFocusMode]);
 
   const [flowNodes, setFlowNodes, onNodesChange] = useNodesState(nodes);
   const [flowEdges, setFlowEdges, onEdgesChange] = useEdgesState(edges);
