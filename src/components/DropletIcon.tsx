@@ -146,8 +146,29 @@ export const faceStyles = {
   }
 };
 
+type DropletTheme = (typeof colorThemes)[keyof typeof colorThemes];
+type FaceShape = 'roundedRect' | 'shield' | 'oval' | 'polygon';
+
+type EyeSpec = {
+  leftPos: [number, number];
+  rightPos: [number, number];
+  type: string;
+};
+
+type MouthSpec = {
+  pos: [number, number];
+  type: string;
+};
+
+type FaceStyle = {
+  shape: FaceShape;
+  eyes: EyeSpec;
+  mouth: MouthSpec;
+  eyebrows?: boolean;
+};
+
 // 얼굴 모양 생성 함수
-const generateFaceShape = (faceStyle: any, theme: any) => {
+const generateFaceShape = (faceStyle: FaceStyle, theme: DropletTheme) => {
   const { shape } = faceStyle;
   
   if (shape === "roundedRect") {
@@ -194,7 +215,7 @@ const generateFaceShape = (faceStyle: any, theme: any) => {
 };
 
 // 표정 생성 함수 (얼굴 스타일에 따라)
-const generateFaceExpression = (faceStyle: any, theme: any) => {
+const generateFaceExpression = (faceStyle: FaceStyle, theme: DropletTheme) => {
   const { eyes, mouth, eyebrows, shape } = faceStyle;
   
   // 눈썹 (타원형 전용)
@@ -231,7 +252,7 @@ const generateFaceExpression = (faceStyle: any, theme: any) => {
 };
 
 // 눈 생성 함수 (누락된 눈 수정)
-const generateEyes = (eyes: any, theme: any, shape: string) => {
+const generateEyes = (eyes: EyeSpec, theme: DropletTheme, shape: FaceShape) => {
   const { leftPos, rightPos, type } = eyes;
   
   if (type === "ellipse") {
@@ -303,7 +324,7 @@ const generateEyes = (eyes: any, theme: any, shape: string) => {
 };
 
 // 입 생성 함수
-const generateMouth = (mouth: any, theme: any, shape: string) => {
+const generateMouth = (mouth: MouthSpec, theme: DropletTheme, shape: FaceShape) => {
   const { pos, type } = mouth;
   
   if (type === "smile") {

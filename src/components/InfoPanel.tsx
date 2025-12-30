@@ -18,30 +18,30 @@ export function InfoPanel({ node, onClose }: InfoPanelProps) {
   const LinkIcon = node.link ? linkIcons[node.link.type] : null;
 
   return (
-    <div className="absolute top-20 right-6 z-50 w-80 bg-gray-900/95 backdrop-blur-sm 
-                    rounded-xl border border-gray-700 shadow-2xl overflow-hidden">
+    <div className="absolute top-20 right-6 z-50 w-80 bg-white backdrop-blur-sm
+                    rounded-xl border border-gray-200 shadow-2xl overflow-hidden">
       {/* Header */}
       <div className={`
-        p-4 border-b border-gray-700
+        p-4 border-b border-gray-200
         ${node.category === 'foundation' || node.category === 'solver'
-          ? 'bg-purple-900/30'
-          : 'bg-emerald-900/30'}
+          ? 'bg-purple-50'
+          : 'bg-emerald-50'}
       `}>
         <div className="flex items-start justify-between">
           <div>
-            <h3 className="text-white font-bold">{node.label}</h3>
+            <h3 className="text-gray-900 font-bold">{node.label}</h3>
             <span className={`
               text-xs px-2 py-0.5 rounded-full mt-1 inline-block
               ${node.category === 'foundation' || node.category === 'solver'
-                ? 'bg-purple-500/20 text-purple-300'
-                : 'bg-emerald-500/20 text-emerald-300'}
+                ? 'bg-purple-100 text-purple-700'
+                : 'bg-emerald-100 text-emerald-700'}
             `}>
               {node.category.replace('-', ' ')}
             </span>
           </div>
-          <button 
+          <button
             onClick={onClose}
-            className="text-gray-400 hover:text-white transition-colors"
+            className="text-gray-400 hover:text-gray-900 transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
@@ -50,15 +50,15 @@ export function InfoPanel({ node, onClose }: InfoPanelProps) {
 
       {/* Content */}
       <div className="p-4 space-y-4">
-        <p className="text-gray-300 text-sm">{node.description}</p>
+        <p className="text-gray-600 text-sm">{node.description}</p>
 
         {/* Tags */}
         {node.tags && node.tags.length > 0 && (
           <div className="flex flex-wrap gap-1.5">
             {node.tags.map((tag) => (
-              <span 
+              <span
                 key={tag}
-                className="text-xs px-2 py-1 rounded-full bg-gray-800 text-gray-400 border border-gray-700"
+                className="text-xs px-2 py-1 rounded-full bg-gray-100 text-gray-600 border border-gray-200"
               >
                 {tag}
               </span>

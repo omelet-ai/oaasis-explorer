@@ -4,10 +4,8 @@ import DropletIcon from '@/components/widgets/DropletIcon';
 import html2canvas from 'html2canvas';
 import { 
   Truck, Calendar, Package, Box, Thermometer, Route, Navigation, Clock, 
-  ShoppingCart, Link2, Snowflake, TrendingUp, Stethoscope, Factory, 
-  Warehouse, Anchor, BoxSelect, Navigation2, Search, Heart, Shield, Target,
-  Network, LineChart, Brain, Database, Globe, Cpu, Bot, Archive, Briefcase,
-  Users, BarChart3, Building2, Boxes, Download
+  ShoppingCart, Link2, Snowflake, TrendingUp, Factory, 
+  Shield, Bot, Building2, Boxes, Download
 } from 'lucide-react';
 
 function TrifoldLeafletInner() {
@@ -251,8 +249,9 @@ function FrontPanel({ width, height }: { width: number; height: number }) {
       fontFamily: "'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif",
     }}>
       {/* Background Large Overflowing Icon Shadow Effect - 회전 제거 */}
-      <img 
-        src="/omelet_icon.png" 
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src="/omelet_icon.png"
         alt="Omelet Icon Shadow" 
         style={{
           position: 'absolute',
@@ -315,15 +314,16 @@ function FrontPanel({ width, height }: { width: number; height: number }) {
       </div>
 
       {/* Bottom Logo Section */}
-      <div style={{ 
-        padding: '30px', 
+      <div style={{
+        padding: '30px',
         zIndex: 2,
         display: 'flex',
         alignItems: 'flex-end',
         justifyContent: 'flex-start'
       }}>
-        <img 
-          src="/omelet-wordmark.png" 
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/omelet-wordmark.png"
           alt="Omelet" 
           style={{ 
             height: '42px', 
@@ -689,7 +689,7 @@ function ProductsPanel({ width, height }: { width: number; height: number }) {
           letterSpacing: '-0.02em',
         }}>Vertical Solutions</h2>
         <p style={{ fontSize: 10, color: textMuted, margin: 0, lineHeight: 1.5, maxWidth: '90%' }}>
-          Tailored MCP Servers integrated with Omelet's Optimization AI Foundation Model.
+          Tailored MCP Servers integrated with Omelet&apos;s Optimization AI Foundation Model.
         </p>
       </div>
 
@@ -777,14 +777,15 @@ function ProductsPanel({ width, height }: { width: number; height: number }) {
             <p style={{ fontSize: 7, fontWeight: 600, color: textMuted, margin: '0 0 4px 0', textTransform: 'uppercase' }}>Omelet Homepage</p>
             <p style={{ fontSize: 14, fontWeight: 800, color: primaryColor, margin: 0 }}>www.omelet.ai</p>
           </div>
-          <div style={{ 
+          <div style={{
             width: 36, height: 36, background: '#fff', borderRadius: 8, padding: '4px',
             boxShadow: '0 2px 8px rgba(0,0,0,0.05)', border: '1px solid #f3f4f6'
           }}>
-            <img 
-              src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://www.omelet.ai" 
-              alt="Omelet QR" 
-              style={{ width: '100%', height: '100%' }} 
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://www.omelet.ai"
+              alt="Omelet QR"
+              style={{ width: '100%', height: '100%' }}
             />
           </div>
         </div>
@@ -802,14 +803,15 @@ function ProductsPanel({ width, height }: { width: number; height: number }) {
             <p style={{ fontSize: 7, fontWeight: 600, color: textMuted, margin: '0 0 4px 0', textTransform: 'uppercase' }}>OaaSIS Platform</p>
             <p style={{ fontSize: 14, fontWeight: 800, color: primaryColor, margin: 0 }}>www.oaasis.cc</p>
           </div>
-          <div style={{ 
+          <div style={{
             width: 36, height: 36, background: '#fff', borderRadius: 8, padding: '4px',
             boxShadow: '0 2px 8px rgba(0,0,0,0.05)', border: '1px solid #f3f4f6'
           }}>
-            <img 
-              src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://www.oaasis.cc" 
-              alt="OaaSIS QR" 
-              style={{ width: '100%', height: '100%' }} 
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://www.oaasis.cc"
+              alt="OaaSIS QR"
+              style={{ width: '100%', height: '100%' }}
             />
           </div>
         </div>
@@ -852,6 +854,7 @@ function InsidePanel({ width, height }: { width: number; height: number }) {
         display: 'flex', justifyContent: 'space-between', alignItems: 'center',
         marginBottom: '16px', opacity: loaded ? 1 : 0, transition: 'all 0.6s ease-out',
       }}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/omelet-wordmark.png" alt="Omelet" style={{ height: '28px', filter: 'brightness(0) invert(1)' }} />
         <span style={{ fontSize: '14px', color: 'rgba(255,255,255,0.35)', fontWeight: 500 }}>CES 2025</span>
       </div>
